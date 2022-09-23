@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity(name = "event")
+@Table(name = "events")
 @RequiredArgsConstructor
 public class Event {
 
@@ -18,5 +19,9 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     private User organizer;
+
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private EventPost eventPost;
 
 }
