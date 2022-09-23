@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,5 +37,9 @@ public class EventPost {
     @MapsId
     @JoinColumn(name = "event_id")
     private Event event;
+
+    @OneToMany(mappedBy = "eventPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<EventPostComment> comments;
 
 }

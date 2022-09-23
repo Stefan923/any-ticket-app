@@ -33,8 +33,12 @@ public class User {
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<EventPostComment> comments;
+
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Event> events = new ArrayList<>();
+    private List<Event> events;
 
 }
