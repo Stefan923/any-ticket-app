@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @ToString
 @Entity(name = "user")
+@Table(name = "users")
 @RequiredArgsConstructor
 public class User {
 
@@ -32,7 +33,7 @@ public class User {
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<Event> events = new ArrayList<>();
 
