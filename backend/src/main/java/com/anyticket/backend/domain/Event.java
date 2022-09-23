@@ -1,17 +1,22 @@
 package com.anyticket.backend.domain;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Entity(name = "event")
 @RequiredArgsConstructor
 public class Event {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private User organizer;
 
 }
