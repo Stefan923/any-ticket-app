@@ -1,11 +1,14 @@
 package com.anyticket.backend.service;
 
 import com.anyticket.backend.domain.Event;
+import com.anyticket.backend.dto.EventDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EventService {
 
-    List<Event> findAll(int pageNumber, int pageSize, String sortBy);
+    List<EventDto> findAll(int pageNumber, int pageSize, String sortBy);
+    Optional<EventDto> save(Event event);
 
 }
