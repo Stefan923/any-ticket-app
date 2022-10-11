@@ -1,5 +1,6 @@
 package com.anyticket.backend.domain;
 
+import com.anyticket.backend.dto.RegisterUserDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -39,5 +40,12 @@ public class User {
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Event> events;
+
+    public User(RegisterUserDto user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+    }
 
 }
