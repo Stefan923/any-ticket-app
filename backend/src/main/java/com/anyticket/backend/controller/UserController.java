@@ -26,8 +26,12 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Set<UserDto>> getUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Set<UserDto>> getUsers(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        return new ResponseEntity<>(userService.findAll(pageNumber, pageSize, sortBy), HttpStatus.OK);
     }
 
     @PostMapping("")

@@ -5,9 +5,15 @@ import com.anyticket.backend.dto.RegisterUserDto;
 import com.anyticket.backend.dto.UserDto;
 import com.anyticket.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,8 +30,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Set<UserDto> findAll() {
-        return userRepository.findAll().stream().map(UserDto::new).collect(Collectors.toSet());
+    public Set<UserDto> findAll(int pageNumber, int pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<User> page = userRepository.findAll(pageable);
+
+        if (page.hasContent()) {
+            return page.stream().map(UserDto::new).collect(Collectors.toSet());
+        }
+        return Collections.emptySet();
     }
 
     @Override

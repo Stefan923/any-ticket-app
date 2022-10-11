@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface UserService {
 
-    Set<UserDto> findAll();
+    Set<UserDto> findAll(int pageNumber, int pageSize, String sortBy);
     Optional<User> save(RegisterUserDto user);
 
 }
