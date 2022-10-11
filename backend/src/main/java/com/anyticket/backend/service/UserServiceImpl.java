@@ -31,8 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Optional<User> save(RegisterUserDto user) {
-        User newUser = new User(user);
-        return Optional.ofNullable(userRepository.save(newUser));
+        try {
+            return Optional.of(userRepository.save(new User(user)));
+        } catch (Exception ex) {
+            return Optional.empty();
+        }
     }
 
 }

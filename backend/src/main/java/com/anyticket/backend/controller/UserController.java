@@ -7,6 +7,7 @@ import com.anyticket.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -31,12 +32,14 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<?> registerUser(@RequestBody RegisterUserDto user) {
-        Optional<User> registeredUser = userService.save(user);
-        if (registeredUser.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        try {
+            Optional<User> registeredUser = userService.save(user);
+            if (registeredUser.isPresent()) {
+                return new ResponseEntity<>(new UserDto(registeredUser.get()), HttpStatus.CREATED);
+            }
+        } catch (UnexpectedRollbackException ignored) { }
 
-        return new ResponseEntity<>(new UserDto(registeredUser.get()), HttpStatus.CREATED);
+        return new ResponseEntity<>(null, HttpStatus.CONFLICT);
     }
 
 }
