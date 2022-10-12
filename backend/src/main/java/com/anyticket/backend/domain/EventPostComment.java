@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,9 +36,11 @@ public class EventPostComment {
     private String content;
 
     @Column(name = "creation_time")
+    @CreationTimestamp
     private LocalDateTime creationTime;
 
     @Column(name = "last_update_time")
+    @UpdateTimestamp
     private LocalDateTime lastUpdateTime;
 
 }
