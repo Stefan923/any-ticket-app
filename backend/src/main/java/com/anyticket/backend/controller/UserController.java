@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterUserDto user) {
+    public ResponseEntity<?> registerUser(@RequestBody @Valid RegisterUserDto user) {
         try {
             Optional<User> registeredUser = userService.save(user);
             if (registeredUser.isPresent()) {
