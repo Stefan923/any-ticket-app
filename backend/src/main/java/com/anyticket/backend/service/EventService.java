@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface EventService {
 
     List<EventDto> findAll(int pageNumber, int pageSize, String sortBy);
+    Optional<EventDto> find(long id);
     Optional<EventDto> save(Event event);
 
 }

@@ -26,11 +26,18 @@ public class EventController {
 
     @GetMapping("")
     public ResponseEntity<List<EventDto>> getEvents(
-            @RequestParam("pageNumber") int pageNumber,
-            @RequestParam("pageSize") int pageSize,
-            @RequestParam("sortBy") String sortBy
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "id") String sortBy
     ) {
         return new ResponseEntity<>(eventService.findAll(pageNumber, pageSize, sortBy), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEvent(@PathVariable long id) {
+        Optional<EventDto> event = eventService.find(id);
+        return event.isPresent() ? new ResponseEntity<>(event.get(), HttpStatus.FOUND) :
+                new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("")
