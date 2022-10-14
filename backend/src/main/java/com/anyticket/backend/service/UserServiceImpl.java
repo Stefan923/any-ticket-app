@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final int MAX_PAGE_SIZE = 100;
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Set<UserDto> findAll(int pageNumber, int pageSize, String sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(pageNumber, Math.min(pageSize, MAX_PAGE_SIZE), Sort.by(sortBy));
         Page<User> page = userRepository.findAll(pageable);
 
         if (page.hasContent()) {
